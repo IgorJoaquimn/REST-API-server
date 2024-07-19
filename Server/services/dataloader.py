@@ -1,16 +1,28 @@
 import json
 
 class Dataloader:
+    '''
+    This class is responsible for:
+        * dealing with the IO in the file that the data is stored
+        * processing the querys created by the controllers
+            * get_id()
+            * get_max_sunk_games()
+            * get_min_escaped_games()
+    
+    At the bottom of this file there is the pagination code
+    '''
     def __init__(self,file_path='../db/scores.jsonl'):
         self.file_path = file_path
         self.data = self.read_jsonl(file_path)
     
 
     def clean_game(self,game):
+        # This function is responsible by take only the desired information to display in the api
+        # For instance, the data tstamp_auth_start is not a important column for the client
+        # But the game id is, so this function filters it 
         new_game = {}
         new_game["game_id"] = game["id"]
-
-
+        
         stats_columns = [
                             'escaped_ships', 
                             'last_turn', 
@@ -21,10 +33,11 @@ class Dataloader:
                             'valid_shots', 
                         ]
         
+
+        # Selecting only the stats_columns from the game and putting them in another dict
         stats = {col: game[col] for col in stats_columns if col in game}
 
         new_game["game_stats"] = stats
-
         return new_game
 
     def read_jsonl(self,file_path):
@@ -42,6 +55,10 @@ class Dataloader:
         return self.clean_game(games[0])
 
     def filter_list(self,data,f):
+        # This second order function expects a list and a function to work
+        # The function can be, Min, Max, etc
+        # After that, the corresponding value is filtered in the data list
+        # For instance, if f = max(), the code will filter all games that also are the max in that stat
         if not self.data: raise ValueError("Data not loaded.")
 
         target = f(data)
@@ -63,6 +80,18 @@ class Dataloader:
 
 
 def pagination(data,start,limit):
+    '''
+        Pagination is necessary whenever the amount of data to send in a response grows very large. 
+        The idea is that the server will respond with a "page" of results. 
+        A response should contain (up to) limit entries starting by the entry number given in start. 
+
+        For example, a request may ask for the top 10 games with the highest number of sunk ships
+          The response should contain: 
+            (1) a ranking entry with the value sunnk to specify the type of response, 
+            (2) the limit used in the request, 
+            (3) the start index, 
+            (4) the list of games, and URLs for the previous and next page of results in the ranking:
+    '''
     if(limit > 50): raise ValueError("limit greater then 50")
 
     available_data  = data[start-1:start+limit-1]

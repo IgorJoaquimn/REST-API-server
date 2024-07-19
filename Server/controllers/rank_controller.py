@@ -11,6 +11,7 @@ def rank_sunk():
     limit = int(request.args.get('limit', 10))
     start = int(request.args.get('start', 1))
 
+    #Requests with limit larger than 50 should be answered with an HTTP 400 (Bad Request) error code.
     if(limit > 50): return jsonify([]), 400
     if(start <= 0): return jsonify([]), 400
 
@@ -27,12 +28,13 @@ def rank_escaped():
     limit = int(request.args.get('limit', 10))
     start = int(request.args.get('start', 1))
 
+    #Requests with limit larger than 50 should be answered with an HTTP 400 (Bad Request) error code.
     if(limit > 50): return jsonify([]), 400
     if(start <= 0): return jsonify([]), 400
 
     try:
         data = dataloader.get_min_escaped_games()
-        response = build_pagination_response(data,start,limit,ranking="sunk",url="/api/rank/sunk")
+        response = build_pagination_response(data,start,limit,ranking="sunk",url="/api/rank/escaped")
         return jsonify(response), 200
     
     except ValueError as e:

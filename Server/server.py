@@ -1,7 +1,9 @@
 # server.py
 from flask import Flask
-from controllers.game_controller import game_controller
-from controllers.rank_controller import rank_controller
+
+# Each one of the routes is managed by a specific controller
+from controllers.game_controller import game_controller # /api/game/
+from controllers.rank_controller import rank_controller # /api/rank/
 
 app = Flask(__name__)
 
