@@ -31,6 +31,8 @@ class Dataloader:
                             'shot_received', 
                             'sunk_ships', 
                             'valid_shots', 
+                            'auth',
+                            'cannons'
                         ]
         
 
