@@ -10,30 +10,43 @@ class Client:
 
     def build_message(self,headers,method,path):
 
-        request = f"{method} {path} HTTP/1.1\r\n"
-        
-        headers_lines = ""
-        for header, value in headers.items():
-            headers_lines += f"{header}: {value}\r\n"
+        request_line = f"{method} {path} HTTP/1.1\r\n"
+        header_lines = "".join(f"{key}: {value}\r\n" for key, value in headers.items())
 
-        request += headers_lines + "\r\n"
+        request = request_line + header_lines + "\r\n"
         request = request.encode()
 
         return request
+    
 
     def receive_request(self):
+        data = None
+        header = ""
 
-        response = self.socket.receive(1000000)   
-        message = self.parse_response(response) 
+        while True:
+            data = self.socket.receive(1).decode('utf-8')  # Receive data from the socket
+            if not data:
+                break
+            header += data
+            if "\r\n\r\n" in header:  # Check for the end of the HTTP header
+                break
 
-        return message 
-    
-    def parse_response(self,response):
+        length = self.parse_response(header)
+        body = self.socket.receive(length).decode('utf-8')
 
-        http_message = response.decode()
-        _, body = http_message.split('\r\n\r\n', 1)
-        
         return body
+    
+    def parse_response(self,header):
+        content_length = None
+        header_lines = header.split("\r\n")
+        for line in header_lines:
+            if line.lower().startswith("content-length:"):
+                content_length = int(line.split(":")[1].strip())
+                break
+        
+        return content_length
+    
+    
 
     def send_request(self, method, path):
         host = 'localhost'
@@ -49,7 +62,11 @@ class Client:
         
         self.socket.send(request)
         response = self.receive_request()
-        print(response)
+        self.socket.close()
 
 
-        return json.loads(response)
+        try:
+            return json.loads(response)
+        except json.JSONDecodeError:
+            print("Error decoding JSON response")
+            return None
