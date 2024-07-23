@@ -56,29 +56,28 @@ class Dataloader:
         if not games: raise ValueError("Invalid Id")
         return self.clean_game(games[0])
 
-    def filter_list(self,data,f):
+    def order_by(self,data,f):
         # This second order function expects a list and a function to work
         # The function can be, Min, Max, etc
         # After that, the corresponding value is filtered in the data list
         # For instance, if f = max(), the code will filter all games that also are the max in that stat
-        if not self.data: raise ValueError("Data not loaded.")
+        if not data: raise ValueError("Data not loaded.")
 
-        target = f(data)
-        data = [self.data[i] for (i,stat) in enumerate(data) if stat == target ]
+        data.sort(key=f)
         data = [self.clean_game(i) for i in data]
         return data
 
     def get_max_sunk_games(self):
         if not self.data: raise ValueError("Data not loaded.")
 
-        sunks = [d["sunk_ships"] for d in self.data if "sunk_ships" in d]
-        return self.filter_list(sunks,max)
+        f = lambda x: -1*x["sunk_ships"]
+        return self.order_by(self.data,f)
     
     def get_min_escaped_games(self):
         if not self.data: raise ValueError("Data not loaded.")
 
-        escapeds = [d["escaped_ships"] for d in self.data if "escaped_ships" in d]
-        return self.filter_list(escapeds,min)
+        f = lambda x: x["escaped_ships"]
+        return self.order_by(self.data,f)
 
 
 def pagination(data,start,limit):
