@@ -1,0 +1,87 @@
+/* Reset margin and padding for a clean slate */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFFCF8;
+  font-family: 'Roboto', sans-serif; /* Use Roboto font */
+  color: #EFD09E;
+}
+
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:0; /* Space between board and info */
+  align-items: stretch; /* Ensure children are stretched to the same height */
+  width: 85%; /* Adjust the width of the main container as needed */
+}
+
+
+/* Adjust the board container */
+.board-container {
+  flex: 5; /* Allow it to grow and shrink as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Ensure there's enough space around the SVG */
+  max-width: 100%;
+  max-height: 500px; /* Adjust as needed */
+  overflow: hidden; /* Hide overflow to prevent cropping */
+  /* margin-top: 30px; */
+
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  background-color: #272727;
+
+
+}
+
+/* Control the SVG size */
+.svg-board {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+}
+
+.info-container {
+  flex: 1; /* Allow it to grow and shrink as needed */
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+
+  width: 80%;
+  max-width: 600px;
+  background-color: #272727;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.info-item {
+  text-align: center;
+  font-size: 1em;
+  margin: 10px 0; /* Optional: Adds spacing between items */
+}
+
+
+.transparent-group {
+  /* fill-opacity: 0.5; Makes fill color 50% transparent */
+  /* stroke-opacity: 0.5; Makes stroke color 50% transparent */
+  /* Alternatively, use overall opacity */
+  opacity: 0;
+}
+
+
+.show {
+  /* fill-opacity: 1; */
+  /* stroke-opacity: 1; */
+  /* Additional styles can be added here */
+  opacity: 1;
+}

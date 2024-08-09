@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Main container for centering content -->
+    <div class="main-container">
+        <!-- Board container to center the SVG -->
+        <div class="board-container">
+            <object data="board.svg" type="image/svg+xml" class="svg-board">
+                Your browser does not support SVG.
+            </object>
+        </div>
+
+        <!-- Info container for ID and scores -->
+        <div class="info-container">
+            <div class="info-item" id="player-id">Game id: 345</div>
+            <div class="info-item" id="score1">Sunked Ships: 89</div>
+            <div class="info-item" id="score2">Escaped Ships: 76</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
