@@ -10,6 +10,8 @@
 </head>
 <body>
     <!-- Main container for centering content -->
+
+    <h1>Visualizador de Estado de Jogo</h1>
     <div class="main-container">
         <!-- Board container to center the SVG -->
         <div class="board-container">
@@ -20,10 +22,16 @@
 
         <!-- Info container for ID and scores -->
         <div class="info-container">
-            <div class="info-item" id="player-id">Game id: 345</div>
-            <div class="info-item" id="score1">Sunked Ships: 89</div>
-            <div class="info-item" id="score2">Escaped Ships: 76</div>
+            <div class="info-item" id="player-id">Game id: 1</div>
+            <div class="info-item" id="sunk-ships">Sunk Ships: 0</div>
+            <div class="info-item" id="escaped-ships">Escaped Ships: 0</div>
         </div>
+    </div>
+
+
+    <div class="button-container">
+        <button id="prev-button">Left</button>
+        <button id="next-button">Right</button>
     </div>
 
     <script src="script.js"></script>
