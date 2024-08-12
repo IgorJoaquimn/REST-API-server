@@ -5,7 +5,7 @@ class Socket:
     """ Class that implements the socket communication with builtin stop and wait."""
     def __init__(self, host, port):
         self.host = host
-        self.port = port
+        self.port = int(port)
         
 
     def determine_ip_type(self,hostname):

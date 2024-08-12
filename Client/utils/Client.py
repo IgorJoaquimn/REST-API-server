@@ -3,10 +3,10 @@ import json
 from utils.socket_t import Socket
 
 class Client:
-    def __init__(self):
+    def __init__(self,ip,port):
         #The client should strive to **reuse** the TCP connection
         #to send as many REST requests as possible.
-        self.socket = Socket("localhost",5000)
+        self.socket = Socket(ip,port)
 
     def build_message(self,headers,method,path):
 
