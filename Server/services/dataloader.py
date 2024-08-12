@@ -11,7 +11,7 @@ class Dataloader:
     
     At the bottom of this file there is the pagination code
     '''
-    def __init__(self,file_path='../db/scores.jsonl'):
+    def __init__(self,file_path='Server/db/scores.jsonl'):
         self.file_path = file_path
         self.data = self.read_jsonl(file_path)
     
