@@ -22,18 +22,17 @@ def process_performance(games):
     return games_stats
 
 def get_normalized_cannons(cannons):
-    count = [0] * 8
-    cannons_stats = [0] * 8
+    count = [0] * 5
+    cannons_stats = [0] * 9
 
     for cannon in cannons:
         row = cannon[1]
-        count[row] += 1
+        count[row] +=1
 
     for i in count:
-        cannons_stats[i] += 1
+        cannons_stats[i] +=1
 
-    normalized = ''.join(map(str, cannons_stats))
-
+    normalized = ''.join(map(str, cannons_stats[1:]))
     return normalized
 
 def process_cannons(games):
@@ -97,3 +96,4 @@ if __name__ == "__main__":
     c = Client(ip, port)  # Initialize Client with IP and port
 
     analysis(c, analysis_type, output_filename)
+    
